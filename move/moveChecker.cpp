@@ -1,3 +1,6 @@
+#ifndef MOVECHECKER
+#define MOVECHECKER
+
 #include <iostream>
 #include "./board.cpp"
 #include "./move/move.cpp"
@@ -5,15 +8,30 @@
 
 using namespace std;
 
+class MoveChecker {
+
 public:
-    static bool isValidMove(const Board& board, const Move& move) {
 
-    Position* p1 = move.getP1();
-    Position* p2 = move.getP2();
 
-    Piece* piece = board.getPiece(p1->getX(), p1->getY());
-
-    if (piece == nullptr) {
-        cout <<"Invalid move. No piece at the starting position."
+    static bool isValidMove(Move m) {
+        Piece p = b.getPiece(m.getP1()->getX(), m.getP1()->getY());
+         if (!p.checkMove(m)) {
+            cout << "Invalid move according to the piece's rules." << endl;
+            return false;
+        }
+         if (isPathClear(m)) {
+            return true;
+        } else {
+            cout << "There is an obstacle on the path." << endl;
+            return false;
+        }
+        //continue
     }
-    }
+}
+
+private:
+    Board b;
+     bool isPathClear(Move m) {
+     return true;
+}
+#endif

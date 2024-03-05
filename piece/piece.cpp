@@ -23,8 +23,6 @@ public:
         return color;
     }
 
-    #include "Piece.h"
-
     char getSymbol(const Piece& piece) {
         switch (piece.getType()) {
             case Piece::Type::KING:
