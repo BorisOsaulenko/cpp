@@ -1,17 +1,32 @@
-#ifndef PIECE
-#define PIECE 
+#ifndef _PIECE
+#define _PIECE
 
 #include <iostream>
 #include <string>
-#include "../Move/move.cpp"
+#include "../move/move.cpp"
 
 using namespace std;
+enum Type
+{
+    KING,
+    QUEEN,
+    ROOK,
+    BISHOP,
+    KNIGHT,
+    PAWN
+};
+enum Color
+{
+    WHITE,
+    BLACK
+};
 
 class Piece {
+protected:
+    Type type;
+    Color color;
+
 public:
-    enum class Type {KING, QUEEN, ROOK, BISHOP, KNIGHT, PAWN };
-    enum class Color {WHITE, BLACK};
-  
     Piece() {}
     Piece(Type type, Color color) : type(type), color(color) {}
     
@@ -23,29 +38,34 @@ public:
         return color;
     }
 
-    char getSymbol(const Piece& piece) {
-        switch (piece.getType()) {
-            case Piece::Type::KING:
-                return (piece.getColor() == Piece::Color::WHITE) ? '♔' : '♚';
-            case Piece::Type::QUEEN:
-                return (piece.getColor() == Piece::Color::WHITE) ? '♕' : '♛';
-            case Piece::Type::ROOK:
-                return (piece.getColor() == Piece::Color::WHITE) ? '♖' : '♜';
-            case Piece::Type::BISHOP:
-                return (piece.getColor() == Piece::Color::WHITE) ? '♗' : '♝';
-            case Piece::Type::KNIGHT:
-                return (piece.getColor() == Piece::Color::WHITE) ? '♘' : '♞';
-            case Piece::Type::PAWN:
-                return (piece.getColor() == Piece::Color::WHITE) ? '♙' : '♟';
-            default:
-                return '?';
+    string getSymbol()
+    {
+        switch (type)
+        {
+        case Type::KING:
+            return (getColor() == Color::WHITE) ? "♔" : "♚";
+        case Type::QUEEN:
+            return (getColor() == Color::WHITE) ? "♕" : "♛";
+        case Type::ROOK:
+            return (getColor() == Color::WHITE) ? "♖" : "♜";
+        case Type::BISHOP:
+            return (getColor() == Color::WHITE) ? "♗" : "♝";
+        case Type::KNIGHT:
+            return (getColor() == Color::WHITE) ? "\u2658" : "♞";
+        case Type::PAWN:
+            return (getColor() == Color::WHITE) ? "♙" : "♟";
+        default:
+            return " ";
         }
     }
 
-    virtual bool checkMove(Move m) const = 0;
-private:
-    Type type;
-    Color color;
+    virtual bool isValidMove(Move m) const = 0;
+
+    friend ostream &operator<<(ostream &os, Piece &piece)
+    {
+        os << piece.getSymbol();
+        return os;
+    }
 };
 
 #endif

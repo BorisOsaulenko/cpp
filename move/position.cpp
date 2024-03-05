@@ -26,8 +26,8 @@ class Position {
         }
 
         Position (string s) {
-            int x = s[0] - 'a';
-            int y = s[1] - '1';
+            int y = s[0] - 'a';
+            int x = 8 - (s[1] - '0');
             if (x < 0 || x > 7 || y < 0 || y > 7) {
                 throw "Invalid position";
             }
@@ -41,6 +41,15 @@ class Position {
 
         int getY() {
             return y;
+        }
+
+        friend ostream &operator<<(ostream &os, const Position &p)
+        {
+            char file = 'a' + p.x;
+            char rank = '1' + p.y;
+            os << file << rank;
+            // os << "(" << p.x << ", " << p.y << ")";
+            return os;
         }
 };
 

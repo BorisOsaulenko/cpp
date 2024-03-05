@@ -1,17 +1,18 @@
-#ifndef PAWN
-#define PAWN
+#ifndef _PAWN
+#define _PAWN
 
 #include <iostream>
 #include <string>
-#include "../Move/move.cpp"
+#include "../move/move.cpp"
 
 using namespace std;
 
 class Pawn : public Piece {
     public:
     Pawn(Color color) : Piece(Type::PAWN, color) {}
-    
-    bool isValidMove(Move m) {
+
+    bool isValidMove(Move m) const override
+    {
         if (m.getP1()->getX() == m.getP2()->getX() && m.getP1()->getY() - m.getP2()->getY() <= 2 && color == Color::WHITE) {
             return true;// two forward for white
         }
