@@ -70,7 +70,10 @@ public:
                 board[row][col] = nullptr;
             }
         }
+    }
 
+    Piece* getPiece(int x, int y) {
+        return board[x][y];
     }
 
     ~Board() {

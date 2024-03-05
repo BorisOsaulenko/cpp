@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include "../Move/move.cpp"
 
 using namespace std;
 
@@ -22,6 +23,28 @@ public:
         return color;
     }
 
+    #include "Piece.h"
+
+    char getSymbol(const Piece& piece) {
+        switch (piece.getType()) {
+            case Piece::Type::KING:
+                return (piece.getColor() == Piece::Color::WHITE) ? '♔' : '♚';
+            case Piece::Type::QUEEN:
+                return (piece.getColor() == Piece::Color::WHITE) ? '♕' : '♛';
+            case Piece::Type::ROOK:
+                return (piece.getColor() == Piece::Color::WHITE) ? '♖' : '♜';
+            case Piece::Type::BISHOP:
+                return (piece.getColor() == Piece::Color::WHITE) ? '♗' : '♝';
+            case Piece::Type::KNIGHT:
+                return (piece.getColor() == Piece::Color::WHITE) ? '♘' : '♞';
+            case Piece::Type::PAWN:
+                return (piece.getColor() == Piece::Color::WHITE) ? '♙' : '♟';
+            default:
+                return '?';
+        }
+    }
+
+    virtual bool checkMove(Move m) const = 0;
 private:
     Type type;
     Color color;
