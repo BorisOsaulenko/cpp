@@ -30,11 +30,4 @@ bool isPathClear(Board b, Move m)
     return true;
 }
 
-// int main()
-// {
-//     Board b;
-//     b.toDefaultBoard();
-//     return 0;
-// }
-
 #endif

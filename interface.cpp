@@ -3,54 +3,66 @@
 #include "./move/move.cpp"
 #include "./piece/piece.cpp"
 #include "./move/moveChecker.cpp"
+#include "./piece/bishop.cpp"
+#include "./winLost.cpp"
 
 using namespace std;
 
 Board b;
+Color currColor = Color::WHITE;
 MoveChecker mc = *new MoveChecker(b);
 
-void oneRound() {
-    string moveWhite, moveBlack;
-    cout << "White's move: ";
-    cin >> moveWhite;
+string colorToString(Color c)
+{
+    if (c == Color::WHITE)
+    {
+        return "White";
+    }
+    else
+    {
+        return "Black";
+    }
+}
 
-    Move m = *new Move(moveWhite);
-    bool isCorrect = mc.isValidMove(m);
+void nextMove()
+{
+    string move;
+    cout << colorToString(currColor) << "'s move: ";
+    cin >> move;
+
+    Move m = *new Move(move);
+    bool isCorrect = mc.isValidMove(m, currColor);
 
     while (!isCorrect) {
         cout << "Invalid move. Try again: ";
-        cin >> moveWhite;
-        m = *new Move(moveWhite);
-        isCorrect = mc.isValidMove(m);
+        cin >> move;
+        m = *new Move(move);
+        isCorrect = mc.isValidMove(m, currColor);
     }
 
     b.performMove(m);
     b.print();
 
-    cout << "Black's move: ";
-    cin >> moveBlack;
-    Move m2 = *new Move(moveBlack);
-    isCorrect = mc.isValidMove(m2);
-
-    while (!isCorrect) {
-        cout << "Invalid move. Try again: ";
-        cin >> moveBlack;
-        m2 = *new Move(moveBlack);
-        isCorrect = mc.isValidMove(m2);
+    if (currColor == Color::WHITE)
+    {
+        currColor = Color::BLACK;
     }
-
-    b.performMove(m2);
-    b.print();
+    else
+    {
+        currColor = Color::WHITE;
+    }
 }
 
 int main() {
     b.toDefaultBoard();
-
-    // b.performMove(*new Move("e2_e4"));
     b.print();
+    int state = winLost(b, currColor);
 
-    oneRound();
-    oneRound();
+    do
+    {
+        nextMove();
+        state = winLost(b, currColor);
+    } while (state == 0);
 
     return 0;
 }

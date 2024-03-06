@@ -120,5 +120,23 @@ void performMove(Move m)
     };
 };
 
+// int main()
+// {
+
+//     Board b;
+//     b.toDefaultBoard();
+//     b.print();
+//     Move m("e2_e4");
+//     Piece *p1 = b.getPiece(*m.getP1());
+//     Piece *p2 = b.getPiece(*m.getP2());
+
+//     // cout << *m.getP1() << endl
+//     //      << *m.getP2() << endl;
+//     // cout << (p1 == nullptr) << (p2 == nullptr) << endl;
+//     b.performMove(m);
+//     b.print();
+
+//     return 0;
+// }
 
 #endif
